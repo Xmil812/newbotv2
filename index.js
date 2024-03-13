@@ -373,7 +373,7 @@ async function konek() {
             if (type != "videoMessage") {
               const token = await getToken(
                 1,
-                wa_number.split("@")[0].toLowerCase() + "@1secmail.com",
+                generateString().toLowerCase() + "@1secmail.com",
               );
               const result = await editImage(
                 prompt,
@@ -385,7 +385,7 @@ async function konek() {
             } else {
               const token = await getToken(
                 1,
-                wa_number.split("@")[0].toLowerCase() + "@1secmail.com",
+                generateString().toLowerCase() + "@1secmail.com",
               );
               const form = new FormData();
               form.append("video", media, "video.mp4");
@@ -469,7 +469,11 @@ async function konek() {
                 ],
               );
             }
-          } else if (prompt && member.hasOwnProperty(wa_number)) {
+          }else if(prompt.split(' ')[0]==='.img'){
+              token = await getToken(1,generateString().toLowerCase()+'@1secmail.com')
+              let result = await axios.get('https://pyapi.cyclic.app/api/imagegen?prompt='+prompt.replace(prompt.split(' ')[0]+' ','')+'&token='+token)
+              imageMessage({url:result.data})
+          }else if (prompt && member.hasOwnProperty(wa_number)) {
             let pesan = (
               await axios.get("https://pyapi.cyclic.app/api/gpt3", {
                 params: {
@@ -503,7 +507,7 @@ async function konek() {
 // Menambahkan
 //( async () =>{await //console.luuog("r");sleep(5)})()
 
-// konek()
+konek()
 
 const express = require("express");
 const app = express();
@@ -520,4 +524,4 @@ app.get("/", (req, res) => {
     res.send({ play: stutu });
   }
 });
-app.listen();
+//app.listen();
