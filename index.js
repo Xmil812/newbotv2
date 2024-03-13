@@ -491,9 +491,7 @@ async function konek() {
             wa_number,
           );
         }
-      } catch (err) {
-        //console.luuog(err)
-      }
+      } catch (err) {}
     });
   } catch (we) {
     stutu = false;
