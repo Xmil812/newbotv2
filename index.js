@@ -1,7 +1,7 @@
 
 const axios = require('axios'); 
 var {Bugil}=require('./bug')
-//console.log(Bugil)
+////console.luuog(Bugil)
 
 const { tmpdir } = require("os")
 const Crypto = require("crypto")
@@ -19,10 +19,10 @@ const modules = require('./mod');
 for (const im in modules){
     eval(modules[im].toString())
 }
-console.log(modules)
+//console.luuog(modules)
 const all = fs.readFileSync('mod.js','utf-8');
 const moment = require('moment-timezone');
-//console.log(moment(1000).tz("Asia/Kolkata").format("DD/MM/YYYY HH:mm:ss"))
+////console.luuog(moment(1000).tz("Asia/Kolkata").format("DD/MM/YYYY HH:mm:ss"))
 const { BufferJSON, WA_DEFAULT_EPHEMERAL, generateWAMessageFromContent, proto, generateWAMessageContent, generateWAMessage, prepareWAMessageMedia, areJidsSameUser, getContentType } = require('@whiskeysockets/baileys')
 const logo = fs.readFileSync('logo.jpg');
 const querystring = require("querystring");
@@ -85,7 +85,7 @@ async function getToken(v,email){
     let limit = 0;
     let kode
     while (limit<10){
-        await sleep(1)
+        await sleep(1000)
         const inbox = await axios.get('https://www.1secmail.com/api/v1/?action=getMessages&login='+email.split("@")[0]+'&domain='+email.split("@")[1])
         if (inbox!=undefined) {
             try{
@@ -99,7 +99,7 @@ async function getToken(v,email){
     }
 }
 // getToken(2,'irjrhrhhrjuev@1secmail.com')
-// .then(response=>{console.log(response)})
+// .then(response=>{//console.luuog(response)})
 
 
 const { v4: uuidv4 } = require('uuid');
@@ -139,18 +139,18 @@ async function konek(){
         auth: auth.state,
         logger: Pino({ level: "silent" })
     });
-   // console.log(soket)
+   // //console.luuog(soket)
     soket.ev.on("creds.update", auth.saveCreds);
     soket.ev.on("connection.update", ({ connection }) => {
         if (connection === "open") {
-            console.log("Wa yang tersambung : " + soket.user.id.split(':')[0])
+            //console.luuog("Wa yang tersambung : " + soket.user.id.split(':')[0])
         }
         if (connection === "close") konek();
     });
     soket.ev.on("messages.upsert", async ({ messages }) => {
         try{
             const m = messages[0];
-            console.log(m)
+            //console.luuog(m)
             soket.readMessages([m.key])
             let wa_number = m.key.remoteJid;
             const userg = m.key.participant || wa_number;
@@ -293,7 +293,7 @@ async function konek(){
                 }
 
                 const mCaption = (m2['imageMessage'] || m2['videoMessage']).caption
-                console.log(`${type} : ${mCaption}`)
+                //console.luuog(`${type} : ${mCaption}`)
                 fakeReplys=m
 
                 if (mCaption.split(' ')[0]==='.toUrl'){
@@ -326,18 +326,19 @@ async function konek(){
                         form.append('prompt', prompt);
                         
                         let result = (await axios.post('https://pyapi.cyclic.app/api/editor/vidio', form)).data
-                        console.log(result)
+                        //console.luuog(result)
                         let progres = 0
                         while (progres<30){
                             let chk = (await axios.get(result.progres)).data
-                            console.log(chk)
+                            //console.luuog(chk)
                             if (chk['status-code'] === 'done'){
                                 let rs = chk['results'][0]
                                 await videoMessage({url:rs})
                                 progres = 31
                             }else if (chk['status-code'] == 'in-progress'){
-                                await sleep(5)
-                                console.log(progres)
+                                await sleep(5000)
+                                ////////////console.luuog(progres)
+                                ////console.luuog(progres)
                                 //progres = progres 
                                 //await textMessage('progres : '+String(chk['progress'])+'%')
                             }
@@ -351,7 +352,7 @@ async function konek(){
             }
 
             if (typeof prompt === 'string' && !m.eventResponses){
-                console.log(`textMessage : ${prompt}`)
+                //console.luuog(`textMessage : ${prompt}`)
                 if (prompt.split(' ')[0] === '.toUrl' || prompt.split(' ')[0] === '.sticker'){
                     textMessage('butuh video/gambar')
                 }
@@ -404,16 +405,19 @@ async function konek(){
                   lastMessages: [{ key: m.key, messageTimestamp: m.messageTimestamp }]
               },wa_number)
             }
-        }catch(err){console.log(err)}
+        }catch(err){//console.luuog(err)
+        }
     })}
   catch (we){
     stutu=false;
-    console.log(we)
+    //console.luuog(we)
   }
 }
 //const semuaFungsi = Object.getOwnPropertyNames(module.exports).filter(name => typeof module.exports[name] === 'function' || typeof module.exports[name] === 'AsyncFunction');
-//console.log(semuaFungsi)
+////console.luuog(semuaFungsi)
 // Menambahkan
+//( async () =>{await //console.luuog("r");sleep(5)})()
+
 // konek()
 
 const express = require('express');
@@ -422,7 +426,7 @@ const port = '0000';
 app.get('/', (req, res) => {
   if (!stutu) {
     stutu = true;
-    konek()
+    try{konek()}catch(j){}
 
     res.send({'play':stutu})
 
