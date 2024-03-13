@@ -507,7 +507,7 @@ async function konek() {
 // Menambahkan
 //( async () =>{await //console.luuog("r");sleep(5)})()
 
-konek()
+//konek()
 
 const express = require("express");
 const app = express();
@@ -524,4 +524,4 @@ app.get("/", (req, res) => {
     res.send({ play: stutu });
   }
 });
-//app.listen();
+app.listen();
