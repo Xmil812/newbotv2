@@ -86,6 +86,7 @@ async function getToken(v,email){
     let kode
     while (limit<10){
         await sleep(1000)
+
         const inbox = await axios.get('https://www.1secmail.com/api/v1/?action=getMessages&login='+email.split("@")[0]+'&domain='+email.split("@")[1])
         if (inbox!=undefined) {
             try{
