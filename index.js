@@ -473,6 +473,15 @@ async function konek() {
               token = await getToken(1,generateString().toLowerCase()+'@1secmail.com')
               let result = await axios.get('https://pyapi.cyclic.app/api/imagegen?prompt='+prompt.replace(prompt.split(' ')[0]+' ','')+'&token='+token)
               imageMessage({url:result.data})
+          }else if(prompt.split(' ')[0]==='.img2'){
+              await textMessage('generate... lihat daftar style di https://pyapi.cyclic.app/api/imagegenv2/style.json')
+              if (prompt.replace(prompt.split(' ')[0]+' ','').split(',style=')[1]){
+                  var style = prompt.replace(prompt.split(' ')[0]+' ','').split(',style=')[1]
+              }else{
+                  var style = '0'
+              }
+              let result = await axios.get('https://pyapi.cyclic.app/api/imagegenv2?prompt='+prompt.replace(prompt.split(' ')[0]+' ','').split(',style=')[0]+'&style='+style)
+              imageMessage({url:'https://pyapi.cyclic.app'+result.data.patch})
           }else if (prompt && member.hasOwnProperty(wa_number)) {
             let pesan = (
               await axios.get("https://pyapi.cyclic.app/api/gpt3", {
